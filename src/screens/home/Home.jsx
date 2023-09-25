@@ -2,35 +2,28 @@ import {View, Text, TextInput, Button, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import ProductList from '../../features/product/ProductList';
 import Category from '../../features/product/Category';
 import {ScrollView} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 import Caro from './Caro';
-import ProductCard from '../../features/product/ProductCard';
+import ProductList from '../../Features/product/components/ProductList';
 
 const Home = ({onSearch}) => {
   const [searchText, setSearchText] = useState('');
- const navigation = useNavigation()
+  const navigation = useNavigation();
   const handleSearch = () => {
     // Pass the search text to the parent component or perform search logic here
     onSearch(searchText);
   };
 
-  const handlePress =()=>{
+  const handlePress = () => {
     //move to category screen
-    navigation.navigate(
-      'Category',
-    )
-
-
-
-  }
-
+    navigation.navigate('Category');
+  };
 
   return (
-    <SafeAreaView className="bg-gray-100 h-auto">
+    <SafeAreaView className="bg-gray-100 h-full">
       <ScrollView vertical>
         <View className="m-2 flex-row justify-between">
           <View>
@@ -51,11 +44,10 @@ const Home = ({onSearch}) => {
             <View>
               <Text className="text-lg ">Categories</Text>
             </View>
-            <TouchableOpacity onPress={
-               ()=>{
-                handlePress()
-               }
-            }>
+            <TouchableOpacity
+              onPress={() => {
+                handlePress();
+              }}>
               <Text className="text-sm">See all</Text>
             </TouchableOpacity>
           </View>
@@ -87,7 +79,7 @@ const Home = ({onSearch}) => {
               <Text className="text-lg ">See all</Text>
             </View>
           </View>
-          <ProductCard />
+          <ProductList />
         </View>
         <View className=" rounded-lg flex-col  p-4   px-3 bg-white ">
           <View className="flex-row justify-between items-center w-full">
@@ -98,7 +90,7 @@ const Home = ({onSearch}) => {
               <Text className="text-lg ">See all</Text>
             </View>
           </View>
-          <ProductCard />
+          <ProductList />
         </View>
       </ScrollView>
     </SafeAreaView>

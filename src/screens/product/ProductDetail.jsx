@@ -1,104 +1,111 @@
 import {View, Text, Image, ScrollView} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {TouchableOpacity} from 'react-native';
 import BuyIcon from '../../features/product/BuyIcon';
 import {
   addToCart,
   removeFromCart,
+  selectCartItems,
   selectCartItemsWithId,
 } from '../../redux/slices/cart';
 import {useDispatch, useSelector} from 'react-redux';
 import {doc, getDoc} from 'firebase/firestore';
 import {db} from '../../services/firebaseconfig';
 
-const ProductDetail = ({route}) => {
-  
+const ProductDetail = (
+  {
+    
+   
+
+    productId,
+
+  },
+) => {
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
 
-
-  const {product} = route.params;
-  const items = useSelector(state => selectCartItemsWithId(state, product.id));
+  const {
+    params: {
+      id,
+      title,
+      price,
+      category,
+      description,
+      vendor,
+      location,
+      quantity,
+      imageUrl,
+    },
+  } = useRoute();
+  console.log('id', id);
+ const items = useSelector((state)=>selectCartItemsWithId(state, id));
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   const fetchProduct = async () => {
-  //     try {
-  //       const docRef = doc(db, 'products', id);
-  //       const docSnap = await getDoc(docRef);
-  //       if (docSnap.exists()) {
-  //         const productData = docSnap.data();
-  //         setProduct(productData);
-  //         setLoading(false);
-  //       } else {
-  //         console.log('No such document!');
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   fetchProduct();
-  // }, [id]);
-
-  // if (!product) {
-  //   return (
-  //     <View style={{padding: 4}}>
-  //       <Text style={{fontSize: 20, fontWeight: 'bold'}}>Loading...</Text>
-  //     </View>
-  //   );
-  // } else if (loading) {
-  //   return (
-  //     <View style={{padding: 4}}>
-  //       <Text style={{fontSize: 20, fontWeight: 'bold'}}>Loading...</Text>
-  //     </View>
-  //   );
-  // }
-
   const addProductToCart = () => {
-    dispatch(addToCart(product));
-    console.log('Product added to cart');
+    dispatch(
+      addToCart({
+        id,
+        title,
+        price,
+        category,
+        description,
+        vendor,
+        location,
+        quantity,
+        imageUrl,
+      }),
+    );
   };
 
   const removeProductFromCart = () => {
     if (!items.length > 0) return;
-    dispatch(removeFromCart(product));
-    console.log('Product removed from cart');
+    dispatch(
+      removeFromCart({
+      id,
+        title,
+        price,
+        category,
+        description,
+        vendor,
+        location,
+        quantity,
+        imageUrl,
+      }),
+    );
   };
-  console.log('items:', items.length);
+
+
 
   return (
     <>
-      <ScrollView vertical>
-        <View>
-          <View style={{width: '100%',
-      
-        }}
-        
-         className="container h-72 bg-red-500"
-        >
-           <View className="flex-row bg-white justify-center items-center h-full">
+      <ScrollView vertical className="bg-white">
+        <View key={id}>
+          <View style={{width: '100%'}} className="container h-72 bg-red-500">
+            <View className="flex-row bg-white justify-center items-center h-full">
               <Image
                 className="h-48 w-40"
                 loadingStyle={{size: 'large', color: 'blue'}}
-                source={{uri: product.imageUrl}}
+                source={{uri: imageUrl}}
               />
-              </View>
-          
+            </View>
           </View>
 
-          <View style={{padding: 16}} className=" ">
-            <View>
-              <View>
-                <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-                  {product.title}
-                </Text>
-
-                <Text style={{fontWeight: 'bold', fontSize: 16}}>
-                  {product.price}
-                </Text>
+          <View
+            style={{padding: 16}}
+            className=" shadow-4xl h-full border-gray-200 border-2  rounded-t-[50] bg-white">
+            <View className="p-2">
+              <View className="flex-row justify-between items-center">
+                <View>
+                  <Text className="font-bold text-black text-2xl">{title}</Text>
+                  <Text className="text-gray-400 text-sm">{category}</Text>
+                </View>
+                <View className="bg-teal-700 rounded-full">
+                  <Text className="text-white text-md  p-2 font-bold">
+                    Ghc {price}
+                  </Text>
+                </View>
               </View>
             </View>
             <View
@@ -109,7 +116,9 @@ const ProductDetail = ({route}) => {
                 marginVertical: 10,
               }}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <TouchableOpacity onPress={removeProductFromCart}>
+                <TouchableOpacity
+                  onPress={removeProductFromCart}
+                  className="pr-2">
                   <Ionicons name="remove" size={26} color="black" />
                 </TouchableOpacity>
 
@@ -118,10 +127,11 @@ const ProductDetail = ({route}) => {
                     fontSize: 30,
                     fontWeight: 'bold',
                     marginHorizontal: 2,
-                  }}>
+                  }}
+                  className="text-black pr-2">
                   {items.length}
                 </Text>
-                <TouchableOpacity onPress={() => addProductToCart()}>
+                <TouchableOpacity onPress={addProductToCart}>
                   <View
                     style={{
                       backgroundColor: 'teal',
@@ -136,19 +146,28 @@ const ProductDetail = ({route}) => {
                   </View>
                 </TouchableOpacity>
               </View>
-
-              <View>
-                <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-                  {product.price}
-                </Text>
-              </View>
             </View>
-            <Text style={{fontSize: 20, fontWeight: 'bold'}}></Text>
-            <Text className="font-bold text-xl">
-              Composition
-            </Text>
-            <View>
-              <Text>{product.composition}</Text>
+            <View className="px-2">
+              <Text className="font-bold text-xl text-black py-1">
+                Composition
+              </Text>
+              <Text className="text-gray-400 text-sm">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Adipisci ea quasi ex quas minus quam consequuntur ipsam labore
+                molestiae incidunt officiis accusantium illo, debitis aliquam
+                quo impedit sunt dignissimos. Earum.
+              </Text>
+            </View>
+            <View className="px-2 my-3">
+              <Text className="font-bold text-xl text-black py-1">
+                Description
+              </Text>
+              <Text className="text-gray-400 text-sm">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Adipisci ea quasi ex quas minus quam consequuntur ipsam labore
+                molestiae incidunt officiis accusantium illo, debitis aliquam
+                quo impedit sunt dignissimos. Earum.
+              </Text>
             </View>
           </View>
         </View>

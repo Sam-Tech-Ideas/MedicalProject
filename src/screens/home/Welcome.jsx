@@ -7,10 +7,10 @@ const Welcome = ({navigation}) => {
 
     
   return (
-    <SafeAreaView className="my-32">
+    <SafeAreaView className="flex justify-center items-center h-full">
       <View className="flex-col   items-center justify-center">
         <Image source={require('../../assets/icons/Logo.png')} />
-        <View className="py-8 text-center">
+        <View className="py-8 text-center"> 
           <Text className="text-2xl font-bold text-center">
             Let's get started!
           </Text>

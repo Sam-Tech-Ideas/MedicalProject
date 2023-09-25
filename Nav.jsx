@@ -18,10 +18,10 @@ import {onAuthStateChanged} from 'firebase/auth';
 import {setUser} from './src/redux/slices/user';
 import {auth} from './src/services/firebaseconfig';
 import Checkout from './src/features/payment/Checkout';
-import Payment from './src/features/payment/Payment';
 import Cender from './src/features/payment/Cender';
 import CategoryList from './src/screens/product/CategoryList';
 import CategoryScreen from './src/screens/product/CategoryScreen';
+import PaymentScreen from './src/features/payment/Payment';
 
 const Stack = createNativeStackNavigator();
 
@@ -54,6 +54,14 @@ export default function Nav() {
           />
 
           <Stack.Screen
+            name="PaymentScreen"
+            options={{
+              headerShadowVisible: false,
+              presentation: 'modal',
+            }}
+            component={PaymentScreen}
+          />
+          <Stack.Screen
             name="Checkout"
             options={{
               headerShadowVisible: false,
@@ -73,7 +81,6 @@ export default function Nav() {
             name="CategoryScreen"
             options={{
               headerShadowVisible: false,
-              headerShown: false,
             }}
             component={CategoryScreen}
           />

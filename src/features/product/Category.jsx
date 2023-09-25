@@ -12,7 +12,7 @@ const Category = () => {
     {
       id: 1,
       name: 'All',
-    }, 
+    },
     {
       id: 2,
       name: 'Condoms',
@@ -64,15 +64,15 @@ const Category = () => {
       horizontal
       contentContainerStyle={{
         paddingHorizontal: 20,
-        paddingVertical: 20,
+    
       }}
       showsHorizontalScrollIndicator={false}>
       {categories.map(category => (
         <TouchableOpacity key={category.id}>
           <View
             style={{borderRadius: 8, padding: 4}}
-            className="bg-teal-500 rounded-md p-2 m-1">
-            <Text style={{fontSize: 16}} className="text-white">
+            className="border-teal-300 rounded-md p-2 m-1 border">
+            <Text style={{fontSize: 16}} className="text-teal-300">
               {category.name}
             </Text>
           </View>

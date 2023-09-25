@@ -131,25 +131,7 @@ const Register = ({navigation}) => {
         </Text>
       </View>
 
-      {/* <View className="flex-row justify-center items-center">
-        <Text className="text-lg  text-center my-8">OR</Text>
-      </View>
-
-      <TouchableOpacity className="mx-4 flex-row justify-center">
-        <View className="flex-row justify-center items-center w-[300] border-2 py-3 rounded-[50px] border-gray-100 ">
-          <View className="">
-            <Image
-              source={require('../../assets/icons/Google.png')}
-              style={{width: 20, height: 20}}
-            />
-          </View>
-          <View className="pl-4">
-            <Text className="text-lg font-bold   text-center">
-              Sign in with Google
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity> */}
+     
     </SafeAreaView>
   );
 };

@@ -5,7 +5,19 @@ import {collection, getDocs, onSnapshot} from 'firebase/firestore';
 import {db} from '../../services/firebaseconfig';
 import {useNavigation} from '@react-navigation/native';
 
-const ProductCard = () => {
+const ProductCard = (
+  {
+    id,
+    imageUrl,
+    title,
+    price,
+    description,
+    vendor,
+    location,
+    quantity,
+
+  }
+) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
@@ -29,7 +41,16 @@ const ProductCard = () => {
 
   const handlePress = product => {
     // Navigate to the detail page with the product data
-    navigation.navigate('ProductDetail', {product});
+    navigation.navigate('ProductDetail', {
+      id,
+      imageUrl,
+      title,
+      price,
+      description,
+      vendor,
+      location,
+      quantity,
+    });
   };
 
   return (
@@ -39,12 +60,12 @@ const ProductCard = () => {
           {products.map(product => (
             <TouchableOpacity
               key={product.id}
-              onPress={() => handlePress(product)}>
-              <View className="w-[24vh] rounded-xl   h-64 m-2 border  bg-white  border-gray-200 ">
-                <View className=" h-40 p-4">
+              onPress={() => handlePress()}>
+              <View className="w-[24vh] rounded-xl   h-54 m-2 border  bg-white  border-gray-200 " key={product.id}>
+                <View className=" h-40 p-2" >
                   <Image
                     source={{uri: product?.imageUrl}}
-                    className="  h-36 object-center object-cover"
+                    className="  h-28 object-center object-cover"
                   />
                 </View>
                 <View className="px-2">
@@ -53,7 +74,7 @@ const ProductCard = () => {
                       {product.title}
                     </Text>
                   </View>
-                  <View>
+                  <View className="pb-1">
                     <Text className="text-md text-teal-400">
                       Ghc {product.price}
                     </Text>

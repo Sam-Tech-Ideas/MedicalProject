@@ -89,7 +89,7 @@ const Login = ({navigation}) => {
   }, [successMessage]);
 
   return (
-    <SafeAreaView className="bg-white py-4  h-full">
+    <SafeAreaView className="bg-white   h-full flex justify-center items-center">
       <View className="flex-row justify-between items-center bg-gray-100 mx-4 rounded-2xl">
         <View className="p-3">
           <Ionicons name="mail-outline" size={30} className="" />
@@ -160,7 +160,7 @@ const Login = ({navigation}) => {
           </View>
           <View className="pl-4">
             <Text className="text-lg font-bold   text-center">
-              Sign in with Google
+              Sign in with Google 
             </Text>
           </View>
         </View>
